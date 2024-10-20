@@ -4,3 +4,4 @@
 -   ESLint linting
 -   Autocomplete WITH function parameters
 -   Ensure-installed mason lsp servers
+-   TMUX integration plugin
