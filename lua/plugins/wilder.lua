@@ -1,5 +1,4 @@
 -- Autocomplete for command line mode
-
 return {
     'gelguy/wilder.nvim',
     config = function()

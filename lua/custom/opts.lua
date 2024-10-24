@@ -1,15 +1,12 @@
--- This file is loaded before initializing lazy.nvim
-----------------------------------------------------
-
 -- Make sure to setup `mapleader` and `maplocalleader` before loading lazy.nvim so that mappings are correct.
 vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
+vim.g.maplocalleader = " "
 
--- Disable line wrapping
-vim.opt.wrap = false
-
--- Merge system clipboard with vim clipboard
-vim.opt.clipboard = "unnamedplus"
+-- KASPARAS: We want to enable text wraps, because we have a cool and sneaky remap for j and k to comfortably move around wraps
+vim.opt.wrap = true
+vim.opt.breakindent = true
+-- KASPRAS: better wrapping option
+vim.cmd("set whichwrap+=<,>,[,],h,l")
 
 -- Set line numbers (current line abosulte, others relative)
 vim.opt.number = true
@@ -41,3 +38,13 @@ vim.opt.ignorecase = true
 -- Disable default statu line (since we are using lualine)
 vim.opt.showmode = false -- disable text
 vim.opt.laststatus = 3 -- disable the line
+
+-- KASPARAS: remove ~ 
+vim.opt.fillchars:append({ eob = ' ' })
+
+-- KASPARAS: incremental search so that text highlights wouldn't stay
+vim.opt.hlsearch = false
+vim.opt.incsearch = true
+
+-- KASPARAS: nerd font
+vim.g.have_nerd_font = true
