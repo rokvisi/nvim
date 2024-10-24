@@ -1,7 +1,8 @@
--   Surround selected with () {} [] "" etc.
--   Treesitter text objects
--   Prettier formatting
--   ESLint linting
--   Autocomplete WITH function parameters
--   Ensure-installed mason lsp servers
+-   Surround selected with () {} [] "" etc + keybinds.
+-   Treesitter text-objects keybinds.
+-   Prettier formatting / ESLint linting.
+-   Autocomplete WHILE writing function parameters.
+-   Autocomplete WHILE writing variable names.
+-   "'foo' is undefined -> import { foo } from 'bar'" | LSP actions?
+-   Hard-code (ensure-installed) lsp servers in config.
 -   TMUX integration plugin
