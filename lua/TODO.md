@@ -2,7 +2,7 @@
 -   Treesitter text-objects keybinds.
 -   Prettier formatting / ESLint linting.
 -   Autocomplete WHILE writing function parameters.
--   Autocomplete WHILE writing variable names.
 -   "'foo' is undefined -> import { foo } from 'bar'" | LSP actions?
 -   Hard-code (ensure-installed) lsp servers in config.
 -   TMUX integration plugin
+-   Set theme in config.
