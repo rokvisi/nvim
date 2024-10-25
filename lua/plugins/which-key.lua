@@ -1,5 +1,4 @@
 -- Shows available successive keybinds upon pressing any keyibnd.
-
 return {
     "folke/which-key.nvim",
     event = "VeryLazy",
@@ -18,3 +17,4 @@ return {
       },
     },
   }
+
