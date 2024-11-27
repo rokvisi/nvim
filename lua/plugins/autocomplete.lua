@@ -1,6 +1,7 @@
 return {
     { 'hrsh7th/cmp-path' },
     {'L3MON4D3/LuaSnip'},
+    { 'hrsh7th/cmp-nvim-lsp-signature-help' },
     {
         "hrsh7th/nvim-cmp",
         config = function()
@@ -13,7 +14,8 @@ return {
                     { name = 'nvim_lsp' },
                     { name = 'luasnip' },
                     { name = 'buffer' },
-                    {name = 'path'}
+                    { name = 'path' },
+                    { name = 'nvim_lsp_signature_help' }
                 },
                 window = {
                     completion = require("cmp").config.window.bordered(),
