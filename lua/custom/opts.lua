@@ -1,3 +1,7 @@
+-- Fix windows context nvim shells when using powershell.
+vim.opt.shellcmdflag = '-c'
+vim.opt.shellxquote = ''
+
 -- Make sure to setup `mapleader` and `maplocalleader` before loading lazy.nvim so that mappings are correct.
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "

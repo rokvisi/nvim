@@ -11,9 +11,10 @@ return {
         dashboard = {
             enabled = true,
             sections = {
-                {
+                  {
                     section = "terminal",
-                    cmd = "chafa ~/.config/nvim-dash.webp --format symbols --symbols vhalf --size 60x17 --stretch; sleep .1",
+                    cmd = "chafa C:/Users/Rokas/.config/nvim-dash.webp --format symbols --symbols vhalf --size 60x17 --stretch",
+                    -- cmd = "chafa $PROFILE/.config/nvim-dash.webp --format symbols --symbols vhalf --size 60x17 --stretch",
                     height = 17,
                     padding = 1,
                   },
