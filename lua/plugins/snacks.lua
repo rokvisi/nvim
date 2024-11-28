@@ -13,8 +13,8 @@ return {
             sections = {
                   {
                     section = "terminal",
-                    cmd = "chafa C:/Users/Rokas/.config/nvim-dash.webp --format symbols --symbols vhalf --size 60x17 --stretch",
-                    -- cmd = "chafa $PROFILE/.config/nvim-dash.webp --format symbols --symbols vhalf --size 60x17 --stretch",
+                    -- cmd = "chafa C:/Users/Rokas/.config/nvim-dash.webp --format symbols --symbols vhalf --size 60x17 --stretch",
+                    cmd = "chafa $HOME/.config/nvim-dash.webp --format symbols --symbols vhalf --size 60x17 --stretch",
                     height = 17,
                     padding = 1,
                   },
