@@ -1,9 +1,29 @@
 -- Used for installing treesitter parsers for neovim treesitter core.
 return {
-    'nvim-treesitter/nvim-treesitter',
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
     config = function()
         require("nvim-treesitter.configs").setup({
-            ensure_installed = { 'c', 'lua', 'vim', 'vimdoc', 'query', 'html', 'css', 'javascript', 'typescript', 'json', 'yaml', 'svelte', 'vue', 'tsx', 'python', 'rust', 'cpp', 'graphql' },
+            ensure_installed = {
+                "c",
+                "lua",
+                "vim",
+                "vimdoc",
+                "query",
+                "html",
+                "css",
+                "javascript",
+                "typescript",
+                "json",
+                "yaml",
+                "svelte",
+                "vue",
+                "tsx",
+                "python",
+                "rust",
+                "cpp",
+                "graphql",
+            },
             auto_install = true,
 
             highlight = {
@@ -35,9 +55,9 @@ return {
                     -- and should return the mode ('v', 'V', or '<c-v>') or a table
                     -- mapping query_strings to modes.
                     selection_modes = {
-                        ['@parameter.outer'] = 'v', -- charwise
-                        ['@function.outer'] = 'V', -- linewise
-                        ['@class.outer'] = '<c-v>', -- blockwise
+                        ["@parameter.outer"] = "v", -- charwise
+                        ["@function.outer"] = "V",  -- linewise
+                        ["@class.outer"] = "<c-v>", -- blockwise
                     },
                     -- If you set this to `true` (default is `false`) then any textobject is
                     -- extended to include preceding or succeeding whitespace. Succeeding
@@ -51,6 +71,10 @@ return {
                     include_surrounding_whitespace = true,
                 },
             },
+
+            indent = {
+                enable = true
+            },
         })
-    end
+    end,
 }

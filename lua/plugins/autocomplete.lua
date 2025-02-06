@@ -1,6 +1,6 @@
 return {
     { 'hrsh7th/cmp-path' },
-    {'L3MON4D3/LuaSnip'},
+    { 'L3MON4D3/LuaSnip' },
     { 'hrsh7th/cmp-nvim-lsp-signature-help' },
     {
         "hrsh7th/nvim-cmp",
@@ -33,7 +33,9 @@ return {
                     ['<S-Tab>'] = cmp.mapping.select_prev_item(cmp_select)
                 },
             })
+
+            local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+            cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
         end
     }
 }
-

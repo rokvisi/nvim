@@ -20,14 +20,27 @@ vim.opt.relativenumber = true
 vim.opt.cursorline = true
 
 -- Use spaces instead of tabs
-vim.opt.expandtab = true -- expand tab input with spaces characters
+-- vim.opt.expandtab = true   -- expand tab input with spaces characters
+-- vim.opt.smartindent = true -- syntax aware indentations for newline inserts
+-- vim.opt.autoindent = true  -- indent cursor on newline inserts
+-- vim.opt.cindent = false    -- syntax aware indentations for newline inserts
+-- vim.opt.tabstop = 4        -- num of space characters per tab
+-- vim.opt.softtabstop = 4    -- num of space characters per tab
+-- vim.opt.shiftwidth = 4     -- spaces per indentation level
+
+vim.opt.expandtab = true   -- expand tab input with spaces characters
+vim.opt.tabstop = 4        -- num of space characters per tab
+vim.opt.shiftwidth = 4     -- spaces per indentation level
 vim.opt.smartindent = true -- syntax aware indentations for newline inserts
-vim.opt.tabstop = 4 -- num of space characters per tab
-vim.opt.shiftwidth = 4 -- spaces per indentation level
-vim.opt.shiftwidth = 4 -- spaces per indentation level
+vim.opt.expandtab = true   -- expand tab input with spaces characters
+
+vim.g.html_indent_script1 = "inc"
+vim.g.html_indent_style1 = "inc"
+vim.g.html_indent_inctags = "html,body,head,tbody"
+
 
 -- Allow cursor to move anywhere in visual block mode
-vim.opt.virtualedit = "block" 
+vim.opt.virtualedit = "block"
 
 -- Split new windows below and to the right
 vim.opt.splitbelow = true
@@ -41,9 +54,9 @@ vim.opt.ignorecase = true
 
 -- Disable default statu line (since we are using lualine)
 vim.opt.showmode = false -- disable text
-vim.opt.laststatus = 3 -- disable the line
+vim.opt.laststatus = 3   -- disable the line
 
--- KASPARAS: remove ~ 
+-- KASPARAS: remove ~
 vim.opt.fillchars:append({ eob = ' ' })
 
 -- KASPARAS: incremental search so that text highlights wouldn't stay
