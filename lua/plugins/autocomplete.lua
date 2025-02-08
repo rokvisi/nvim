@@ -1,7 +1,7 @@
 return {
     'saghen/blink.cmp',
     dependencies = 'rafamadriz/friendly-snippets', -- optional: provides snippets for the snippet source
-    version = '*',
+    version = '*',                                 -- use a release tag to download pre-built binaries
 
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
@@ -51,10 +51,40 @@ return {
         },
 
         completion = {
-            menu = { border = 'single' },
-            documentation = { auto_show = true, auto_show_delay_ms = 0, window = { border = 'single' } },
+            menu = {
+                border = 'single',
+                draw = {
+                    columns = {
+                        { "label",     "label_description", gap = 1 },
+                        { "kind_icon", "kind" }
+                    },
+                    -- treesitter = { "lsp" },
+                    -- components = {
+                    --     custom = {
+                    --         text = function(ctx)
+                    --             return "a" .. ctx.label_description .. "a"
+                    --         end
+                    --     }
+                    -- }
+                }
+            },
+            ghost_text = {
+                enabled = true,
+            },
+            documentation = {
+                auto_show = true,
+                auto_show_delay_ms = 0,
+                window = {
+                    border = 'single'
+                }
+            },
         },
-        signature = { enabled = true, window = { border = 'single' } },
+        signature = {
+            enabled = true,
+            window = {
+                border = 'single'
+            }
+        },
 
         appearance = {
             -- Sets the fallback highlight groups to nvim-cmp's highlight groups
