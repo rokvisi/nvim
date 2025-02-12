@@ -1,3 +1,66 @@
+local function exclude(srcTable, items)
+    return vim.iter(srcTable):filter(function(s)
+        for _, item in pairs(items) do
+            if s == item then
+                return false
+            end
+        end
+
+        return true
+    end):totable()
+end
+
+local function log(msg)
+    local f = io.open(vim.fn.stdpath("config") .. "\\log.txt", "w")
+    if (f == nil) then return end
+
+    f:write(msg)
+    f:close()
+end
+
+local function log_table(tbl)
+    log(vim.inspect(tbl))
+end
+
+local function is_cursor_in_import_string()
+    -- Get cursor position
+    local cursor = vim.api.nvim_win_get_cursor(0)
+    local row, col = cursor[1] - 1, cursor[2]
+
+    -- Create the query
+    local query = vim.treesitter.query.parse(
+        "javascript",
+        [[
+        (import_statement
+            source: (string
+                (string_fragment) @import_string))
+        ]]
+    )
+
+    -- Get parser and tree
+    local parser = vim.treesitter.get_parser(0)
+    local tree = parser:parse()[1]
+    local root = tree:root()
+
+    -- Execute query and check each match
+    for _, match, metadata in query:iter_matches(root, 0) do
+        for id, node in pairs(match) do
+            local name = query.captures[id]
+            if name == "import_string" then
+                local start_row, start_col, end_row, end_col = node:range()
+                -- Check if cursor falls within the node's range
+                if row >= start_row and row <= end_row then
+                    if row == start_row and col < start_col then return false end
+                    if row == end_row and col > end_col then return false end
+                    return true
+                end
+            end
+        end
+    end
+
+    return false
+end
+
 return {
     'saghen/blink.cmp',
     dependencies = 'rafamadriz/friendly-snippets', -- optional: provides snippets for the snippet source
@@ -56,9 +119,9 @@ return {
                 draw = {
                     columns = {
                         { "label",     "label_description", gap = 1 },
-                        { "kind_icon", "kind" }
+                        { "kind_icon", "kind",              gap = 1, "source_name" }
                     },
-                    -- treesitter = { "lsp" },
+                    treesitter = { "lsp" },
                     -- components = {
                     --     custom = {
                     --         text = function(ctx)
@@ -78,6 +141,14 @@ return {
                     border = 'single'
                 }
             },
+            list = {
+                selection = {
+                    -- preselect = false
+
+                    -- Don't automatically select the first option in cmdline completions.
+                    preselect = function(ctx) return ctx.mode ~= 'cmdline' end
+                }
+            }
         },
         signature = {
             enabled = true,
@@ -99,8 +170,78 @@ return {
         -- Default list of enabled providers defined so that you can extend it
         -- elsewhere in your config, without redefining it, due to `opts_extend`
         sources = {
-            default = { 'lsp', 'path', 'snippets', 'buffer' },
-            cmdline = {}
+            -- default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
+            default = function(ctx)
+                local all_sources = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' }
+
+                -- Ideas:
+                -- * Exlude snippets from all: [string, object, object_type] nodes.
+
+                -- Exclude lazydev completions in non-lua files.
+                if vim.bo.filetype ~= "lua" then
+                    all_sources = exclude(all_sources, { 'lazydev' })
+                end
+
+                -- Svelte customizations
+                if vim.bo.filetype == 'svelte' then
+                    -- Get the AST node at the cursor.
+                    local cursor_node = vim.treesitter.get_node({ lang = "svelte", ignore_injections = false })
+                    local cursor_node_type = cursor_node:type()
+
+                    -- All 'string_fragment' nodes are parented by a 'string' node.
+                    if cursor_node_type == 'string_fragment' then
+                        cursor_node = cursor_node:parent()
+                        cursor_node_type = cursor_node:type()
+                    end
+
+                    -- Check if the parent of the string node is an import statement.
+                    local parent_exists, parent_node = pcall(cursor_node, cursor_node.parent) -- TODO: May error
+                    if parent_exists and parent_node:type() == 'import_statement' then
+                        return { 'lsp' }
+                    end
+
+                    -- Check if the node is a string node.
+                    if cursor_node_type == 'string' then
+                        return exclude(all_sources, { 'snippets' })
+                    end
+
+                    -- Check if the node is inside an object.
+                    if cursor_node_type == 'object' or cursor_node_type == "object_type" then
+                        return { 'lsp', 'buffer' }
+                    end
+                end
+
+                -- In comment nodes - only use the 'buffer' source.
+                -- if vim.tbl_contains({ 'comment', 'line_comment', 'block_comment' }, node:type()) then
+                --     return { 'buffer' }
+                -- end
+
+                -- -- In raw text nodes - don't use the 'snippets' source.
+                -- if vim.tbl_contains({ 'svelte_raw_text', 'raw_text' }, node:type()) then
+                --     local sources = exclude(all_sources, { 'snippets' })
+
+                --     -- Additionally in svelte files - remove path source, since paths are provided by the LSP.
+                --     if vim.bo.filetype == "svelte" then
+                --         return exclude(sources, { 'path' })
+                --     end
+
+                --     return sources
+                -- end
+
+                -- Fallback - use all sources.
+                return all_sources
+            end,
+
+
+            -- cmdline = {},
+            providers = {
+                -- Lazydev completion source for require statements and module annotations in neovim configurations.
+                lazydev = {
+                    name = "LazyDev",
+                    module = "lazydev.integrations.blink",
+                    score_offset = 100, -- make lazydev completions top priority (see `:h blink.cmp`)
+                },
+            },
         },
     },
     opts_extend = { "sources.default" }

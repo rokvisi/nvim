@@ -12,6 +12,7 @@ return {
                 null_ls.builtins.formatting.prettierd,
                 null_ls.builtins.formatting.gofumpt,
                 null_ls.builtins.formatting.black,
+                null_ls.builtins.formatting.clang_format,
             },
         })
         vim.api.nvim_create_autocmd({ "BufWritePre" }, {

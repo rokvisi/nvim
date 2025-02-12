@@ -4,11 +4,6 @@ return {
         "rebelot/kanagawa.nvim",
         lazy = false,
         priority = 1000,
-    },
-    {
-        "dgox16/oldworld.nvim",
-        lazy = false,
-        priority = 1000,
         config = function()
             require("oldworld").setup({
                 variant = "oled"
@@ -23,7 +18,6 @@ return {
         opts = {
             themes = {
                 "kanagawa",
-                "oldworld"
             },
             livePreview = true
         }

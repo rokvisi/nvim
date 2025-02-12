@@ -1,4 +1,5 @@
--- For `plugins/helpview.lua` users.
+-- Fancy vimdoc viewer.
+
 return {
     "OXY2DEV/helpview.nvim",
     lazy = false
