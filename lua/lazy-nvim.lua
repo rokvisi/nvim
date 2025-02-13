@@ -18,7 +18,7 @@ require("lazy").setup({
         { import = "plugins.ui" },
     },
     -- colorscheme that will be used when installing plugins.
-    install = { colorscheme = { "oldworld" } },
+    install = { colorscheme = { "kanagawa" } },
 })
 
 ------------------------------------------------------------------

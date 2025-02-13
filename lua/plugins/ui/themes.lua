@@ -5,11 +5,8 @@ return {
         lazy = false,
         priority = 1000,
         config = function()
-            require("oldworld").setup({
-                variant = "oled"
-            })
-
-            vim.cmd("colorscheme oldworld")
+            require("kanagawa").setup({})
+            vim.cmd("colorscheme kanagawa")
         end
     },
     {
