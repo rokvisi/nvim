@@ -1,5 +1,6 @@
 -- Themery and themes
 return {
+    ---@type LazySpec
     {
         "rebelot/kanagawa.nvim",
         lazy = false,
@@ -9,6 +10,7 @@ return {
             vim.cmd("colorscheme kanagawa")
         end
     },
+    ---@type LazySpec
     {
         'zaldih/themery.nvim',
         lazy = false,

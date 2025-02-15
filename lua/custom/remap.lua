@@ -1,7 +1,6 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-vim.g.maplocalleader = " "
 -- Yank text to system clipboard
 vim.keymap.set("v", "<S-y>", '"+y', { desc = "Yank to system clipboard" })
 
@@ -19,12 +18,12 @@ vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right win
 vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
 vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
 
--- KASPARAS: easy vertical and horizontal splits
-vim.keymap.set("n", "<leader>s", function()
+-- Window split keymaps.
+vim.keymap.set("n", "<leader>sv", function()
     vim.cmd("vsplit")
-end, { desc = "[S]plit window to the right" })
-vim.keymap.set("n", "<leader>hs", function()
+end, { desc = "[S]plit window [V]ertically" })
+vim.keymap.set("n", "<leader>sh", function()
     vim.cmd("split")
-end, { desc = "[H]orizontally [S]plit window" })
+end, { desc = "[S]plit window [H]orizontally" })
 
 --KASPARAS TODO: make resizable splits, I use modkey which is alt for me, IDK how it is on mac

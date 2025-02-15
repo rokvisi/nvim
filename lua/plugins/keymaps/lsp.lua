@@ -38,4 +38,5 @@ M.set_lsp_keymaps = function(bufnr)
         desc = "LSP [I]nformation"
     })
 end
+
 return M

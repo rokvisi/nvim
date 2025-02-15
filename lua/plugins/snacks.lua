@@ -1,5 +1,3 @@
--- Startup Dashboard.
-
 ---@type LazySpec
 return {
     "folke/snacks.nvim",

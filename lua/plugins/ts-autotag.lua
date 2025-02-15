@@ -1,7 +1,11 @@
 -- Autopairs html tags.
+
+---@type LazySpec
 return {
     'windwp/nvim-ts-autotag',
     opts = {
+
+        -- This nested 'opts' is not a mistake. The plugin expects it.
         opts = {
             -- Defaults
             enable_close = true,          -- Auto close tags
@@ -9,8 +13,4 @@ return {
             enable_close_on_slash = false -- Auto close on trailing </
         },
     },
-    config = function()
-        require("nvim-ts-autotag").setup({})
-    end
-
 }

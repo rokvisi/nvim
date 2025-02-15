@@ -1,5 +1,6 @@
 return {
     -- Easily install and manage LSP servers, DAP servers, linters, and formatters.
+    ---@type LazySpec
     {
         "williamboman/mason.nvim",
         opts = {},
@@ -7,10 +8,12 @@ return {
     },
     -- Types for LibUV library which is used for Nvim's event-loop.
     -- LibUV developed for the "luvit" project as the built-in uv module, but can be used in other Lua environments (nvim).
+    ---@type LazySpec
     {
         "Bilal2453/luvit-meta",
         lazy = true
     },
+    ---@type LazySpec
     {
         "folke/lazydev.nvim",
         ft = "lua", -- only load on lua files
@@ -28,9 +31,11 @@ return {
             },
         },
     },
+    ---@type LazySpec
     {
         "neovim/nvim-lspconfig",
     },
+    ---@type LazySpec
     {
         "williamboman/mason-lspconfig.nvim",
         config = function()

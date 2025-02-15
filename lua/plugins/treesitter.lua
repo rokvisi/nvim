@@ -1,9 +1,11 @@
 -- Used for installing treesitter parsers for neovim treesitter core.
+
+---@type LazySpec
 return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     config = function()
-        require("nvim-treesitter.configs").setup({
+        local opts = {
             ensure_installed = {
                 "c",
                 "lua",
@@ -75,6 +77,8 @@ return {
             indent = {
                 enable = true
             },
-        })
+        }
+
+        require("nvim-treesitter.configs").setup(opts)
     end,
 }

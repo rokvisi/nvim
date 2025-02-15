@@ -61,6 +61,7 @@ local function is_cursor_in_import_string()
     return false
 end
 
+---@type LazySpec
 return {
     'saghen/blink.cmp',
     dependencies = 'rafamadriz/friendly-snippets', -- optional: provides snippets for the snippet source
