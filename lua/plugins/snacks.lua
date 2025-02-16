@@ -6,9 +6,9 @@ return {
 
     ---@type snacks.Config
     opts = {
-        -- explorer = {
-        --     replace_netrw = true,
-        -- },
+        explorer = {
+            replace_netrw = true,
+        },
         notifier = {},
         -- your configuration comes here
         -- or leave it empty to use the default settings
