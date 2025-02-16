@@ -1,3 +1,7 @@
+-- Map leader key to SPACE.
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 -- Fix windows context nvim shells when using powershell.
 vim.opt.shellcmdflag = '-c'
 vim.opt.shellxquote = ''

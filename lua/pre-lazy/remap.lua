@@ -1,6 +1,3 @@
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
-
 -- Yank text to system clipboard
 vim.keymap.set("v", "<S-y>", '"+y', { desc = "Yank to system clipboard" })
 
