@@ -1,4 +1,4 @@
--- utils.table module
+-- 'utils.table' module
 
 return {
     exclude = function(srcTable, items)
