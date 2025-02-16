@@ -87,36 +87,20 @@ local function test()
     end
 end
 
-vim.keymap.set('n', 'tt', function() get_node_type() end, {
+vim.keymap.set('n', '<leader>tt', get_node_type, {
     noremap = true,
     silent = true,
-    desc = "test test"
+    desc = "[t]est get node [t]ype at cursor"
 })
-vim.keymap.set('n', 'th', function()
-    Snacks.notifier.hide()
-end, {
+vim.keymap.set('n', '<leader>th', Snacks.notifier.hide, {
     noremap = true,
     silent = true,
-    desc = "test test"
+    desc = "[t]est [h]ide all notifications"
 })
-vim.keymap.set('n', 'ti', function()
+vim.keymap.set('n', '<leader>ti', function()
     vim.treesitter.inspect_tree({ command = "new" })
 end, {
     noremap = true,
     silent = true,
-    desc = "test test"
+    desc = "[t]est [i]nspect tree"
 })
-
-vim.lsp.inlay_hint.enable(true)
-
--- (import_statement ;
---     (import_clause ;
---         (named_imports ;
---             (import_specifier ;
---             name: (identifier)) ;
---             (import_specifier ;
---             name: (identifier)) ;
---             (import_specifier ;
---             name: (identifier)))) ;
---     source: (string ;
---         (string_fragment)))

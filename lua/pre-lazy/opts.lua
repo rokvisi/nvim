@@ -2,6 +2,9 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- Enable inlay hints.
+vim.lsp.inlay_hint.enable(true)
+
 -- Fix windows context nvim shells when using powershell.
 vim.opt.shellcmdflag = '-c'
 vim.opt.shellxquote = ''

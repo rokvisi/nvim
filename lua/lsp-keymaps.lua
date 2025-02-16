@@ -1,41 +1,46 @@
 -- 'lsp_keymaps' module
 return {
     set_lsp_keymaps = function(bufnr)
+        -- LSP actions
+        vim.keymap.set('n', '<leader>lh', vim.lsp.buf.hover, {
+            noremap = true,
+            silent = true,
+            buffer = bufnr,
+            desc = "[l]SP [h]over"
+        })
+        vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action, {
+            noremap = true,
+            silent = true,
+            buffer = bufnr,
+            desc = "[l]sp [a]ctions"
+        })
+        vim.keymap.set('n', '<leader>lr', vim.lsp.buf.rename, {
+            noremap = true,
+            silent = true,
+            buffer = bufnr,
+            desc = "[l]sp [r]ename"
+        })
+
+        -- LSP go to definition/declaration
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {
             noremap = true,
             silent = true,
             buffer = bufnr,
-            desc = "[G]o to [D]efinition"
+            desc = "[g]o to [d]efinition"
         })
         vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, {
             noremap = true,
             silent = true,
             buffer = bufnr,
-            desc = "[G]o to [D]eclaration"
+            desc = "[g]o to [D]eclaration"
         })
-        vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, {
-            noremap = true,
-            silent = true,
-            buffer = bufnr,
-            desc = "[R]e[N]ame variable"
-        })
-        vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, {
-            noremap = true,
-            silent = true,
-            buffer = bufnr,
-            desc = "[C]ode [A]ctions"
-        })
+
+        -- Error diagnostics
         vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, {
             noremap = true,
             silent = true,
             buffer = bufnr,
-            desc = "Show [E]rror diagnostic"
-        })
-        vim.keymap.set('n', '<leader>i', vim.lsp.buf.hover, {
-            noremap = true,
-            silent = true,
-            buffer = bufnr,
-            desc = "LSP [I]nformation"
+            desc = "open [e]rror diagnostics"
         })
     end
 }

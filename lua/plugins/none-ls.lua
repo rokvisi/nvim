@@ -15,11 +15,9 @@ return {
             },
         })
         vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-            desc = "Autoformat on write, insert mode enter or leave",
+            desc = "Autoformat on buffer write.",
             callback = function()
-                local mode = vim.api.nvim_get_mode().mode
-                local filetype = vim.bo.filetype
-
+                -- Only format modified buffers.
                 if vim.bo.modified == true then
                     vim.cmd('lua vim.lsp.buf.format()')
                 end
