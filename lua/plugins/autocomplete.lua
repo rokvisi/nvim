@@ -7,50 +7,6 @@ return {
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
-        -- 'default' for mappings similar to built-in completion
-        -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
-        -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
-        -- See the full "keymap" documentation for information on defining your own keymap.
-        keymap = {
-            preset = 'none',
-            ['<CR>'] = { 'accept', 'fallback' },
-            ['<C-space>'] = { 'show', 'hide', 'fallback' },
-
-            -- If in snippet - jump to next placeholder; otherwise, jump to next source.
-            ['<Tab>'] = {
-                function(cmp)
-                    if cmp.snippet_active() then
-                        return cmp.snippet_forward()
-                    else
-                        return cmp.select_next()
-                    end
-                end,
-                'fallback'
-            },
-
-            -- If in snippet - jump to previous placeholder; otherwise, jump to previous source.
-            ['<S-Tab>'] = {
-                function(cmp)
-                    if cmp.snippet_active() then
-                        return cmp.snippet_backward()
-                    else
-                        return cmp.select_prev()
-                    end
-                end, 'fallback'
-            },
-
-            ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
-
-            -- ['<C-e>'] = { 'hide', 'fallback' },
-            ['<Up>'] = { 'select_prev', 'fallback' },
-            ['<Down>'] = { 'select_next', 'fallback' },
-            -- ['<C-p>'] = { 'select_prev', 'fallback' },
-            -- ['<C-n>'] = { 'select_next', 'fallback' },
-
-            ['<C-u>'] = { 'scroll_documentation_up', 'fallback' },
-            ['<C-d>'] = { 'scroll_documentation_down', 'fallback' },
-        },
-
         completion = {
             menu = {
                 border = 'single',
@@ -81,13 +37,13 @@ return {
             },
             list = {
                 selection = {
-                    -- preselect = false
-
                     -- Don't automatically select the first option in cmdline completions.
+                    -- preselect = false
                     preselect = function(ctx) return ctx.mode ~= 'cmdline' end
                 }
             }
         },
+
         signature = {
             enabled = true,
             window = {
@@ -105,9 +61,15 @@ return {
             nerd_font_variant = 'mono'
         },
 
-        -- Default list of enabled providers defined so that you can extend it
-        -- elsewhere in your config, without redefining it, due to `opts_extend`
+        -- snippets = {
+        --     score_offset = -10,
+        -- },
+
         sources = {
+            -- Default list of enabled providers defined so that you can extend it
+            -- elsewhere in your config, without redefining it, due to `opts_extend`
+            -- TODO: Maybe enable omnifunc source?
+
             -- default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
             default = function(ctx)
                 local all_sources = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' }
@@ -179,6 +141,47 @@ return {
                     score_offset = 100, -- make lazydev completions top priority (see `:h blink.cmp`)
                 },
             },
+        },
+
+        keymap = {
+            -- 'default' for mappings similar to built-in completion
+            -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
+            -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
+            -- See the full "keymap" documentation for information on defining your own keymap.
+            preset = 'none',
+
+            ['<CR>'] = { 'accept', 'fallback' },
+            ['<C-space>'] = { 'show', 'hide', 'fallback' },
+
+            -- If in snippet - jump to next placeholder; otherwise, jump to next source.
+            ['<Tab>'] = {
+                function(cmp)
+                    if cmp.snippet_active() then
+                        return cmp.snippet_forward()
+                    else
+                        return cmp.select_next()
+                    end
+                end,
+                'fallback'
+            },
+            -- If in snippet - jump to previous placeholder; otherwise, jump to previous source.
+            ['<S-Tab>'] = {
+                function(cmp)
+                    if cmp.snippet_active() then
+                        return cmp.snippet_backward()
+                    else
+                        return cmp.select_prev()
+                    end
+                end, 'fallback'
+            },
+
+            ['<Up>'] = { 'select_prev', 'fallback' },
+            ['<Down>'] = { 'select_next', 'fallback' },
+
+            ['<C-u>'] = { 'scroll_documentation_up', 'fallback' },
+            ['<C-d>'] = { 'scroll_documentation_down', 'fallback' },
+
+            ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
         },
     },
     opts_extend = { "sources.default" }
