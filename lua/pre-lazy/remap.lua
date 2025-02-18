@@ -20,3 +20,20 @@ vim.keymap.set("n", "<leader>sv", function() vim.cmd("vsplit") end, { desc = "[s
 vim.keymap.set("n", "<leader>sh", function() vim.cmd("split") end, { desc = "[s]plit window [h]orizontally" })
 
 --KASPARAS TODO: make resizable splits, I use modkey which is alt for me, IDK how it is on mac
+vim.keymap.set('n', '<leader>tt', require("utils").log_ts_nodes_under_cursor, {
+    noremap = true,
+    silent = true,
+    desc = "[t]est get node [t]ype at cursor"
+})
+vim.keymap.set('n', '<leader>th', function() Snacks.notifier.hide() end, {
+    noremap = true,
+    silent = true,
+    desc = "[t]est [h]ide all notifications"
+})
+vim.keymap.set('n', '<leader>ti', function()
+    vim.treesitter.inspect_tree({ command = "new" })
+end, {
+    noremap = true,
+    silent = true,
+    desc = "[t]est [i]nspect tree"
+})

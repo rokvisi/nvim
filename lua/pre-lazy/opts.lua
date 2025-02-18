@@ -48,8 +48,8 @@ vim.opt.splitright = true
 vim.opt.showmode = false -- disable text
 vim.opt.laststatus = 3   -- disable the line
 
--- KASPARAS: remove ~
-vim.opt.fillchars:append({ eob = ' ' })
+-- Stop filling empty lines after the buffer with '~'.
+vim.opt.fillchars:append({ eob = '~' })
 
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
