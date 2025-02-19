@@ -1,3 +1,5 @@
+-- Language server configurations.
+
 return {
     -- Easily install and manage LSP servers, DAP servers, linters, and formatters.
     ---@type LazySpec

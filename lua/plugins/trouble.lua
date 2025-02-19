@@ -1,3 +1,5 @@
+-- Diagnostics
+
 ---@type LazySpec
 return {
     "folke/trouble.nvim",

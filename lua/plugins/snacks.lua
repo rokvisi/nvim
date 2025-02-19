@@ -1,3 +1,5 @@
+-- Various different plugins.
+
 ---@type LazySpec
 return {
     "folke/snacks.nvim",

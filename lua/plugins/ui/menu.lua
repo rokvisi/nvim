@@ -1,4 +1,8 @@
+-- Pretty and customizable right-click menu.
+
+---@type LazySpec
 return {
-    { "nvzone/volt",  lazy = true },
-    { "nvzone/menu",  lazy = true },
+    "nvzone/menu",
+    dependencies = "nvzone/volt",
+    lazy = true
 }
