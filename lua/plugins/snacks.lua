@@ -6,19 +6,11 @@ return {
 
     ---@type snacks.Config
     opts = {
-        explorer = {
-            replace_netrw = true,
-        },
-        notifier = {},
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
         dashboard = {
             enabled = true,
             sections = {
                 {
                     section = "terminal",
-                    -- cmd = "chafa C:/Users/Rokas/.config/nvim-dash.webp --format symbols --symbols vhalf --size 60x17 --stretch",
                     cmd = "chafa $HOME/.config/nvim-dash.webp --format symbols --symbols vhalf --size 60x17 --stretch",
                     height = 17,
                     padding = 1,
@@ -32,69 +24,44 @@ return {
                 },
             },
         },
-        picker = {
-            -- your picker configuration comes here
-            -- or leave it empty to use the default settings
-            -- refer to the configuration section below
-        },
+        notifier = {},
+        picker = {},
         indent = {
-            -- your indent configuration comes here
-            -- or leave it empty to use the default settings
-            -- refer to the configuration section below
-            enabled = true,
-            chunk = {
-                enabled = false,
-            },
-            animate = {
-                enabled = false,
-            },
+            animate = { enabled = false }
+        },
+        explorer = {
+            replace_netrw = true,
         },
     },
     keys = {
-        -- your keymaps configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the keymaps section below
-
         {
             "<leader>ff",
-            function()
-                Snacks.picker.files()
-            end,
+            function() Snacks.picker.files() end,
             desc = "Find Files",
         },
         {
             "<leader>fb",
-            function()
-                Snacks.picker.buffers()
-            end,
+            function() Snacks.picker.buffers() end,
             desc = "Buffers",
         },
         {
             "<leader>fg",
-            function()
-                Snacks.picker.grep()
-            end,
+            function() Snacks.picker.grep() end,
             desc = "Grep",
         },
         {
             "<leader>f:",
-            function()
-                Snacks.picker.command_history()
-            end,
+            function() Snacks.picker.command_history() end,
             desc = "Command History",
         },
         {
             "<leader>fe",
-            function()
-                Snacks.explorer()
-            end,
+            function() Snacks.explorer() end,
             desc = "File Explorer",
         },
         {
             "<leader>fc",
-            function()
-                Snacks.picker.files({ cwd = vim.fn.stdpath("config") })
-            end,
+            function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end,
             desc = "Find Config File",
         },
     },
