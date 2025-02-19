@@ -6,6 +6,7 @@ return {
     dependencies = 'nvim-tree/nvim-web-devicons',
     opts = {
         options = {
+            always_show_tabline = false,
             icons_enabled = true,
             theme = 'auto',
             section_separators = '',
@@ -39,7 +40,16 @@ return {
             lualine_y = { 'progress' },
             lualine_z = {}
         },
-        tabline = {},
+        -- Can't customize the individual buffer names without writing a custom buffers component.
+        -- Using bufferline.nvim instead.
+        tabline = {
+            -- lualine_a = { 'buffers' },
+            -- lualine_b = {},
+            -- lualine_c = {},
+            -- lualine_x = {},
+            -- lualine_y = {},
+            -- lualine_z = { 'tabs' }
+        },
         winbar = {},
         inactive_winbar = {},
         extensions = {}

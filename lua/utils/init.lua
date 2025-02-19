@@ -1,7 +1,7 @@
 --- Convienience function to convert a message (table or string) to a string.
---- @param msg string | table
---- @return string
-local function tostr(msg)
+--- @param msg string | table The message
+--- @return string result
+local function to_str(msg)
     -- Using 'vim.inspect(string)' breaks special characters. So only use it for tables.
     if (type(msg) == 'table') then
         msg = vim.inspect(msg)
@@ -15,12 +15,12 @@ end
 --- @field title? string The log title. Default = nil
 --- @field timeout? number How long the message stays on screen. Default = nil
 
---- Logs a message or table to vim.notify.
---- @param msg string | table
---- @param opts? log_OPTS
+--- Logs a string or table to vim.notify.
+--- @param msg string | table The message
+--- @param opts? log_OPTS The options
 local function log(msg, opts)
     opts = opts or {}
-    msg = tostr(msg)
+    msg = to_str(msg)
 
     vim.notify(msg, opts.level, opts)
 end
@@ -30,16 +30,16 @@ end
 --- @field filename? string The log file filename. Default = 'log.txt'
 --- @field mode? string The write mode. Default = 'a'
 
---- Logs a message or table to a file.
---- @param msg string | table
---- @param opts? flog_OPTS
-local function flog(msg, opts)
+--- Logs a string or table to a file.
+--- @param msg string | table The message
+--- @param opts? flog_OPTS The options
+local function f_log(msg, opts)
     opts = opts or {}
     opts.dest = opts.dest or vim.fn.stdpath("config")
     opts.mode = opts.mode or "a"
     opts.filename = opts.filename or "log.txt"
 
-    msg = tostr(msg)
+    msg = to_str(msg)
 
     local full_path = opts.dest .. "/" .. opts.filename
     local log_file = io.open(full_path, opts.mode)
@@ -63,7 +63,7 @@ end
 --- @param x1 number
 --- @param y2 number
 --- @param x2 number
---- @return boolean
+--- @return boolean result
 local function is_cursor_in_rect(y1, x1, y2, x2)
     local cursor = vim.api.nvim_win_get_cursor(0)
     local row, col = cursor[1] - 1, cursor[2]
@@ -74,7 +74,6 @@ end
 --- Logs the treesitter nodes under the cursor.
 --- @param max_depth? number The maximum parent depth to log. Default = 5
 local function log_ts_nodes_under_cursor(max_depth)
-    local utils = require('utils')
     Snacks.notifier.hide()
 
     max_depth = max_depth or 5
@@ -82,7 +81,7 @@ local function log_ts_nodes_under_cursor(max_depth)
     -- Get the treesitter node under the cursor.
     local cursor_node = vim.treesitter.get_node({ lang = "svelte", ignore_injections = false })
     if cursor_node == nil then
-        utils.log("No treesitter node found under the  cursor.",
+        log("No treesitter node found under the  cursor.",
             { title = 'No TS Node', level = vim.log.levels.ERROR, timeout = 0 })
         return
     end
@@ -91,7 +90,7 @@ local function log_ts_nodes_under_cursor(max_depth)
     -- Uneccessary but sometimes usefull.
     local root_node = cursor_node:root()
     if root_node == nil then
-        utils.log("No treesitter root node found under the cursor.",
+        log("No treesitter root node found under the cursor.",
             { title = 'No TS Root Node', level = vim.log.levels.ERROR, timeout = 0 })
         return
     end
@@ -118,15 +117,91 @@ local function log_ts_nodes_under_cursor(max_depth)
         print_str = print_str .. '\nNODE ' .. i .. ": " .. node:type()
     end
 
-    utils.log(print_str, { title = 'Nodes under cursor', timeout = 0 })
+    log(print_str, { title = 'Nodes under cursor', timeout = 0 })
+end
+
+--- Split a string by a pattern.
+--- @param str string The string to split.
+--- @param pattern string The pattern to split by.
+--- @return table tokens The tokens.
+local function split(str, pattern)
+    local result = {} -- NOTE: use {n = 0} in Lua-5.0
+
+    local fpat = "(.-)" .. pattern
+    local last_end = 1
+    local s, e, cap = str:find(fpat, 1)
+
+    while s do
+        if s ~= 1 or cap ~= "" then
+            table.insert(result, cap)
+        end
+        last_end = e + 1
+        s, e, cap = str:find(fpat, last_end)
+    end
+
+    if last_end <= #str then
+        cap = str:sub(last_end)
+        table.insert(result, cap)
+    end
+
+    return result
+end
+
+--- Get the filename from a path (or the last folder if no trailing '/' exists).
+--- @param path string The path.
+--- @return string filename The filename.
+local function get_filename(path)
+    local parts = split(path, "/")
+    return parts[#parts]
+end
+
+--- Get the last directory in the path.
+--- @param path string The path.
+--- @return string last_dir The last directory in the path.
+local function get_last_dir_in_path(path)
+    local parts = split(path, "/")
+    return parts[#parts - 1]
+end
+
+--- Check if the current project is a svelte project.
+--- @return boolean result
+local function is_svelte_project()
+    local project_root = vim.fs.root(0, { "svelte.config.js", "svelte.config.ts" })
+    return project_root ~= nil
+end
+
+--- Exclude keys from a table.
+--- @param src_table table The source table.
+--- @param keys table The keys to exclude.
+--- @return table result The table with the keys excluded.
+local function exclude(src_table, keys)
+    return vim.iter(src_table):filter(function(k)
+        for _, key in pairs(keys) do
+            if k == key then
+                return false
+            end
+        end
+
+        return true
+    end):totable()
 end
 
 -- Return the module.
 return {
-    tostr = tostr,
+    lua = {
+        to_str = to_str,
+        split = split,
+    },
+    paths = {
+        get_filename = get_filename,
+        get_last_dir_in_path = get_last_dir_in_path,
+    },
+    table = {
+        exclude = exclude
+    },
     log = log,
-    flog = flog,
+    f_log = f_log,
     is_cursor_in_rect = is_cursor_in_rect,
     log_ts_nodes_under_cursor = log_ts_nodes_under_cursor,
-    table = require('utils.table')
+    is_svelte_project = is_svelte_project,
 }

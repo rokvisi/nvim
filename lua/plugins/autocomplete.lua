@@ -73,7 +73,7 @@ return {
             -- default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
             default = function(ctx)
                 local all_sources = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' }
-                local exclude = require('utils.table').exclude
+                local exclude = require('utils').table.exclude
 
                 -- Ideas:
                 -- * Exlude snippets from all: [string, object, object_type] nodes.

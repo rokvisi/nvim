@@ -2,10 +2,11 @@
 vim.keymap.set("v", "<S-y>", '"+y', { desc = "Yank to system clipboard" })
 
 -- KASPARAS: remaping down and up for easier navigation in wrapped lines
+-- TODO: Figure out what this does.
 vim.keymap.set("n", "j", "gj", { noremap = true, silent = true })
 vim.keymap.set("n", "k", "gk", { noremap = true, silent = true })
 
--- KASPARAS: move selected lines while holding alt
+-- Move selected lines while holding alt.
 vim.keymap.set("v", "<M-k>", ":m '<-2<CR>gv=gv")
 vim.keymap.set("v", "<M-j>", ":m '>+1<CR>gv=gv")
 
@@ -15,11 +16,14 @@ vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right win
 vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
 vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
 
--- Window split keymaps.
+-- Easier window splits.
 vim.keymap.set("n", "<leader>sv", function() vim.cmd("vsplit") end, { desc = "[s]plit window [v]ertically" })
 vim.keymap.set("n", "<leader>sh", function() vim.cmd("split") end, { desc = "[s]plit window [h]orizontally" })
 
 --KASPARAS TODO: make resizable splits, I use modkey which is alt for me, IDK how it is on mac
+-- TODO: Implement this.
+
+-- Test keybinds.
 vim.keymap.set('n', '<leader>tt', require("utils").log_ts_nodes_under_cursor, {
     noremap = true,
     silent = true,
@@ -38,8 +42,8 @@ end, {
     desc = "[t]est [i]nspect tree"
 })
 
-
--- mouse users + nvimtree users!
+-- NVChad menu.
+-- TODO: Add actually usefull options to this.
 vim.keymap.set({ "n", "v" }, "<RightMouse>", function()
     require('menu.utils').delete_old_menus()
 

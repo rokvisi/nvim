@@ -54,8 +54,8 @@ vim.opt.fillchars:append({ eob = '~' })
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 
--- Enable folds
-vim.o.foldcolumn = '1' -- '0' is not bad
-vim.o.foldlevel = 99   -- Using ufo provider need a large value, feel free to decrease the value
+-- folds
+vim.o.foldenable = true -- Enable folding.
+vim.o.foldcolumn = '0'  -- Don't show fold column in the gutter.
+vim.o.foldlevel = 99    -- Using ufo provider need a large value, feel free to decrease the value
 vim.o.foldlevelstart = 99
-vim.o.foldenable = true
