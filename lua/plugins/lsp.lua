@@ -15,7 +15,6 @@ return {
             {
                 'saghen/blink.cmp' -- IMPORTANT, must load blink before lspconfig.
             },
-
             ---@type LazySpec
             {
                 "folke/lazydev.nvim",
@@ -50,11 +49,32 @@ return {
                 function(server_name)
                     local server = require("lspconfig")[server_name]
 
-                    -- Add autocomplete capabilities from 'blink.cmp'.
-                    local capabilities = require('blink.cmp').get_lsp_capabilities()
+                    -- Extend capabilities with folding.
+                    local default_capabilities = vim.lsp.protocol.make_client_capabilities()
+                    default_capabilities.textDocument.foldingRange = {
+                        dynamicRegistration = false,
+                        lineFoldingOnly = true
+                    }
+
+                    -- Extend capabilities with autocomplete from 'blink.cmp'.
+                    local capabilities = require('blink.cmp').get_lsp_capabilities(default_capabilities)
 
                     -- Attach keymaps
-                    local function on_attach(_, bufnr)
+                    -- Maybe use the LSP Attach event instead?
+                    -- vim.api.nvim_create_autocmd("LspAttach", {
+                    --     callback = function(args)
+                    --       local bufnr = args.buf
+                    --       local client = vim.lsp.get_client_by_id(args.data.client_id)
+                    --       if client.server_capabilities.completionProvider then
+                    --         vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
+                    --       end
+                    --       if client.server_capabilities.definitionProvider then
+                    --         vim.bo[bufnr].tagfunc = "v:lua.vim.lsp.tagfunc"
+                    --       end
+                    --     end,
+                    --   })
+                    local function on_attach(client, bufnr)
+                        require("lsp-format").on_attach(client, bufnr)
                         require("lsp-keymaps").set_lsp_keymaps(bufnr)
                     end
 

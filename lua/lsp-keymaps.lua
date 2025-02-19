@@ -21,6 +21,15 @@ return {
             desc = "[l]sp [r]ename"
         })
 
+        -- Use lsp-format created UserComand to format the buffer.
+        -- vim.lsp.buf.format() breaks folds.
+        vim.keymap.set('n', '<leader>lf', vim.cmd.Format, {
+            noremap = true,
+            silent = true,
+            buffer = bufnr,
+            desc = "[l]sp [f]ormat"
+        })
+
         -- LSP go to definition/declaration
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {
             noremap = true,

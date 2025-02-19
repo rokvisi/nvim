@@ -37,3 +37,26 @@ end, {
     silent = true,
     desc = "[t]est [i]nspect tree"
 })
+
+
+-- mouse users + nvimtree users!
+vim.keymap.set({ "n", "v" }, "<RightMouse>", function()
+    require('menu.utils').delete_old_menus()
+
+    vim.cmd.exec '"normal! \\<RightMouse>"'
+
+    -- clicked buf
+    local buf = vim.api.nvim_win_get_buf(vim.fn.getmousepos().winid)
+    local options = vim.bo[buf].ft == "NvimTree" and "nvimtree" or "default"
+
+    -- To customize the menu: https://github.com/nvzone/menu/blob/main/lua/menus/default.lua
+    require("menu").open({
+        {
+            name = "Format Buffer",
+            cmd = function()
+                vim.cmd.Format()
+            end,
+            rtxt = "<leader>lf",
+        }
+    }, { mouse = true })
+end, {})

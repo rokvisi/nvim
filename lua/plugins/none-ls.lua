@@ -1,3 +1,5 @@
+-- Use formatters as lsp's to provide formatting and linting.
+
 ---@type LazySpec
 return {
     "nvimtools/none-ls.nvim",
@@ -14,14 +16,16 @@ return {
                 null_ls.builtins.formatting.clang_format,
             },
         })
-        vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-            desc = "Autoformat on buffer write.",
-            callback = function()
-                -- Only format modified buffers.
-                if vim.bo.modified == true then
-                    vim.cmd('lua vim.lsp.buf.format()')
-                end
-            end
-        })
+        --? Using lsp-format instead.
+        -- vim.api.nvim_create_autocmd({ "BufWrite" }, {
+        --     desc = "Autoformat on buffer write.",
+        --     callback = function()
+        --         -- Only format modified buffers.
+        --         if vim.bo.modified == true then
+        --             vim.lsp.buf.format();
+        --             -- vim.cmd('lua vim.lsp.buf.format()')
+        --         end
+        --     end
+        -- })
     end,
 }
