@@ -7,13 +7,6 @@ return {
     dependencies = "nvim-lua/plenary.nvim",
     opts = {},
     keys = {
-        -- Find harpoon marks.
-        {
-            "<leader>fh",
-            function() require("harpoon").ui:toggle_quick_menu(require("harpoon"):list()) end,
-            desc = "[f]ind [h]arpoon marks",
-        },
-
         -- Generic add, remove, next, previous.
         {
             "<leader>hA",

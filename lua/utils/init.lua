@@ -186,6 +186,25 @@ local function exclude(src_table, keys)
     end):totable()
 end
 
+
+--- Map each element in a table.
+--- @generic K, V, Res
+--- @param src_table table<K, V> The source table.
+--- @param map_fn fun(value: V): Res The map function.
+--- @return Res[] result The mapped table.
+local function map(src_table, map_fn)
+    return vim.iter(src_table):map(map_fn):totable()
+end
+
+--- Map each (index, element) in a table.
+--- @generic K, V, Res
+--- @param src_table table<K, V> The source table.
+--- @param map_fn fun(i: number, value: V): Res The map function.
+--- @return Res[] result The mapped table.
+local function map_ipairs(src_table, map_fn)
+    return vim.iter(ipairs(src_table)):map(map_fn):totable()
+end
+
 -- Return the module.
 return {
     lua = {
@@ -197,7 +216,9 @@ return {
         get_last_dir_in_path = get_last_dir_in_path,
     },
     table = {
-        exclude = exclude
+        exclude = exclude,
+        map = map,
+        map_ipairs = map_ipairs,
     },
     log = log,
     f_log = f_log,

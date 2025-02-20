@@ -1,25 +1,7 @@
 # Generic
 
 - Configure a way to grep search like in VSCode.
-
-- Use snacks picker for picking harpoon marks.
-
-- Use a telescope script that just shows the files that git changed. This is pretty much always a perfect list of the files I’m working on.
-
-```lua
-function _G.git_diff(opts)
-  local pickers = require "telescope.pickers"
-  local finders = require "telescope.finders"
-  local conf = require("telescope.config").values
-  list = vim.fn.systemlist('git diff --name-only main')
-
-  pickers.new(opts, {
-    prompt_title = "git diff",
-    finder = finders.new_table { results = list },
-    sorter = conf.generic_sorter(opts)
-  }):find()
-end
-```
+- Harpoon remove (generic) keybind just removes from the end of the list. Need to remove the current file if its in the list.
 
 # Svelte specific
 
@@ -29,5 +11,6 @@ end
 # Known Issues
 
 - using 'vim.cmd.Format' (provided by 'lsp-format' plugin) also writes the file.
-- lsp-format doesn't format on first write (using 'vim.lsp.buf.format()' instead breaks folded regions :().
-- folding actions (za, zM, zR) take a while to start working because 'ufo.nvim' uses 'lsp' as the primary provider.
+- lsp-format doesn't format on first write. using 'vim.lsp.buf.format()' instead breaks folded regions >:(
+- folding actions (za, zM, zR) take a while to start working because 'ufo.nvim' uses 'lsp' as the primary provider. the lsp attaches rather fast, but it takes a while for folds to strat working. need to figure out why.
+- Harpoon marks with 'snacks.picker' can point to invalid rows or columns. this causes an error on navigation. Can be fixed with a custom accept function to check. (The rows and columns are update when)

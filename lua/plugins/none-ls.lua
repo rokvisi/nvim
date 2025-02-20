@@ -16,7 +16,7 @@ return {
                 null_ls.builtins.formatting.clang_format,
             },
         })
-        --? Using lsp-format instead.
+        --? Currently Using lsp-format instead.
         -- vim.api.nvim_create_autocmd({ "BufWrite" }, {
         --     desc = "Autoformat on buffer write.",
         --     callback = function()

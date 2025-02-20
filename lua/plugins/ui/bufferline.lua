@@ -1,3 +1,5 @@
+-- Show buffer names just like in VSCode.
+
 local utils = require('utils')
 
 local function svelte_name_formatter(buf)
