@@ -4,7 +4,7 @@ local utils = require('utils')
 
 local function svelte_name_formatter(buf)
     -- Substitutions:
-    -- %1 - the last path (last folder in the path)
+    -- %1 - the last directory in the path
     -- %2 - filename + extension
     local patterns = {
         -- Root Page
@@ -41,7 +41,7 @@ local function svelte_name_formatter(buf)
 
     local path = buf.path
     local filename = buf.name
-    local last_path = utils.paths.get_last_dir_in_path(path)
+    local last_dir_in_path = utils.paths.get_last_dir_in_path(path)
 
     -- Iterate over all patterns.
     for pattern, template in pairs(patterns) do
@@ -50,7 +50,7 @@ local function svelte_name_formatter(buf)
         -- Match found.
         if match then
             local substituted = template
-            substituted = substituted:gsub("%%1", last_path)
+            substituted = substituted:gsub("%%1", last_dir_in_path)
             substituted = substituted:gsub("%%2", filename)
 
             return substituted

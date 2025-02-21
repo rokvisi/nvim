@@ -2,14 +2,14 @@
 
 local function sources_default_filtered(ctx)
     local all_sources = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' }
-    local exclude = require('utils').table.exclude
+    local utils = require('utils')
 
     -- Ideas:
     -- * Exlude snippets from all: [string, object, object_type] nodes.
 
     -- Exclude lazydev completions in non-lua files.
     if vim.bo.filetype ~= "lua" then
-        all_sources = exclude(all_sources, { 'lazydev' })
+        all_sources = utils.table.exclude(all_sources, { 'lazydev' })
     end
 
     -- Svelte customizations
@@ -32,7 +32,7 @@ local function sources_default_filtered(ctx)
 
         -- Check if the node is a string node.
         if cursor_node_type == 'string' then
-            return exclude(all_sources, { 'snippets' })
+            return utils.table.exclude(all_sources, { 'snippets' })
         end
 
         -- Check if the node is inside an object.
@@ -48,11 +48,11 @@ local function sources_default_filtered(ctx)
 
     -- -- In raw text nodes - don't use the 'snippets' source.
     -- if vim.tbl_contains({ 'svelte_raw_text', 'raw_text' }, node:type()) then
-    --     local sources = exclude(all_sources, { 'snippets' })
+    --     local sources = utils.table.exclude(all_sources, { 'snippets' })
 
     --     -- Additionally in svelte files - remove path source, since paths are provided by the LSP.
     --     if vim.bo.filetype == "svelte" then
-    --         return exclude(sources, { 'path' })
+    --         return utils.table.exclude(sources, { 'path' })
     --     end
 
     --     return sources
@@ -106,7 +106,7 @@ return {
                 }
             }
         },
-        
+
         signature = {
             enabled = true,
             window = {

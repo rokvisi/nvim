@@ -104,6 +104,27 @@ return {
                     })
                 end,
 
+                -- Add "typescript-svelte-plugin" globally to the TypeScript language server.
+                -- This adds support for Svelte's zero-effort type safety in TypeScript files.
+                -- Does not intefere with non-Svelte projects (plugin auto-detects Svelte).
+                -- https://svelte.dev/blog/zero-config-type-safety
+                -- *IMPORTANT*: The plugin needs to be installed globally.
+                -- *IMPORTANT*: The PATH may vary depending on the OS and Package Manager.
+                ["ts_ls"] = function(server_name)
+                    require("lspconfig")[server_name].setup({
+                        init_options = {
+                            plugins = {
+                                {
+                                    name = "typescript-svelte-plugin",
+                                    location = vim.fs.normalize(
+                                        "$HOME/.bun/install/global/node_modules/typescript-svelte-plugin"
+                                    ),
+                                },
+                            },
+                        },
+                    })
+                end
+
                 -- Can't configure clang_format (embedded in clangd) or clangd with LSPConfig.
                 -- https://github.com/LazyVim/LazyVim/discussions/122#discussioncomment-4768884
                 -- ["clang"] = function (server_name)

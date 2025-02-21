@@ -36,51 +36,16 @@ return {
         },
     },
     keys = {
-        {
-            "<leader>ff",
-            function() Snacks.picker.files() end,
-            desc = "[f]ind [f]iles",
-        },
-        {
-            "<leader>fb",
-            function() Snacks.picker.buffers() end,
-            desc = "[f]ind [b]uffers",
-        },
-        {
-            "<leader>fg",
-            function() Snacks.picker.grep() end,
-            desc = "[f]ind [g]rep",
-        },
-        {
-            "<leader>f:",
-            function() Snacks.picker.command_history() end,
-            desc = "[f]ind [:]command history",
-        },
-        {
-            "<leader>fe",
-            function() Snacks.explorer() end,
-            desc = "[f]ind [e]xplorer",
-        },
-        {
-            "<leader>fc",
-            function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end,
-            desc = "[f]ind [c]onfig file",
-        },
-        {
-            "<leader>fC",
-            function() Snacks.picker.colorschemes() end,
-            desc = "[f]ind [C]olorscheme",
-        },
-        {
-            "<leader>fn",
-            function() Snacks.picker.notifications() end,
-            desc = "[f]ind [n]notification",
-        },
-        {
-            "<leader>fH",
-            function() Snacks.picker.help() end,
-            desc = "[f]ind [H]elp",
-        },
+        { "<leader>ff", function() Snacks.picker.files() end,                                   desc = "[f]ind [f]iles" },
+        { "<leader>fb", function() Snacks.picker.buffers() end,                                 desc = "[f]ind [b]uffers" },
+        { "<leader>fg", function() Snacks.picker.grep() end,                                    desc = "[f]ind [g]rep" },
+        { "<leader>f:", function() Snacks.picker.command_history() end,                         desc = "[f]ind [:]command history" },
+        { "<leader>fe", function() Snacks.explorer() end,                                       desc = "[f]ind [e]xplorer" },
+        { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "[f]ind [c]onfig file" },
+        { "<leader>fC", function() Snacks.picker.colorschemes() end,                            desc = "[f]ind [C]olorscheme" },
+        { "<leader>fn", function() Snacks.picker.notifications() end,                           desc = "[f]ind [n]notification" },
+        { "<leader>fH", function() Snacks.picker.help() end,                                    desc = "[f]ind [H]elp" },
+        { "<leader>fx", function() Snacks.picker.diagnostics_buffer() end,                      desc = "[f]ind diagnosti[x]s" },
         {
             "<leader>fh",
             function()
@@ -115,7 +80,7 @@ return {
         {
             "<leader>fd",
             function()
-                local files = vim.fn.systemlist('git diff --name-only main')
+                local files = vim.fn.systemlist('git diff --name-only')
                 local picker_items = require("utils").table.map_ipairs(files, function(i, file)
                     ---@type snacks.picker.Item
                     return {

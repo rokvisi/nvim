@@ -6,19 +6,19 @@ return {
             noremap = true,
             silent = true,
             buffer = bufnr,
-            desc = "[l]SP [h]over"
+            desc = '[l]SP [h]over',
         })
         vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action, {
             noremap = true,
             silent = true,
             buffer = bufnr,
-            desc = "[l]sp [a]ctions"
+            desc = '[l]sp [a]ctions',
         })
         vim.keymap.set('n', '<leader>lr', vim.lsp.buf.rename, {
             noremap = true,
             silent = true,
             buffer = bufnr,
-            desc = "[l]sp [r]ename"
+            desc = '[l]sp [r]ename',
         })
 
         -- Use lsp-format created UserComand to format the buffer.
@@ -27,7 +27,14 @@ return {
             noremap = true,
             silent = true,
             buffer = bufnr,
-            desc = "[l]sp [f]ormat"
+            desc = '[l]sp [f]ormat (lsp-format)',
+        })
+
+        vim.keymap.set('n', '<leader>lF', vim.lsp.buf.format, {
+            noremap = true,
+            silent = true,
+            buffer = bufnr,
+            desc = '[l]sp [F]ormat (force lsp)',
         })
 
         -- LSP go to definition/declaration
@@ -35,13 +42,13 @@ return {
             noremap = true,
             silent = true,
             buffer = bufnr,
-            desc = "[g]o to [d]efinition"
+            desc = '[g]o to [d]efinition',
         })
         vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, {
             noremap = true,
             silent = true,
             buffer = bufnr,
-            desc = "[g]o to [D]eclaration"
+            desc = '[g]o to [D]eclaration',
         })
 
         -- Error diagnostics
@@ -49,7 +56,7 @@ return {
             noremap = true,
             silent = true,
             buffer = bufnr,
-            desc = "open [e]rror diagnostics"
+            desc = 'open [e]rror diagnostics',
         })
-    end
+    end,
 }
