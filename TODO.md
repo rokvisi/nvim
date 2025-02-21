@@ -5,7 +5,6 @@
 
 # Svelte specific
 
-- Detect ambient types in svelte projects (For context: Infer load function type in +page.ts files.)
 - Jump to / create +page.ts|+page.server.ts +server.ts files relative to current .svelte file and vice-versa.
 
 # Known Issues
@@ -14,7 +13,7 @@
 
 - 'lsp-format' doesn't format on first write. using native 'vim.lsp.buf.format()' instead breaks folded regions >:(
 
-- 'lsp-format' ignored none-ls formatters.
+- 'lsp-format' ignores none-ls formatters.
 
 - folding actions (za, zM, zR) take a while to start working because 'ufo.nvim' uses 'lsp' as the primary provider. the lsp attaches rather fast, but it takes a while for folds to strat working. need to figure out why. or just use "indent" as the folding provider.
 
