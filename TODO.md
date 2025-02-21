@@ -1,7 +1,7 @@
 # Generic
 
-- Configure a way to grep search like in VSCode.
 - Harpoon remove (generic) keybind just removes from the end of the list. Need to remove the current file if its in the list.
+- Maybe use 'snacks.debug.inspect' for own custom 'utils.log' and 'utils.f_flog'
 
 # Svelte specific
 

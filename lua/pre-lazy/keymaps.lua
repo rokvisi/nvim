@@ -20,6 +20,9 @@ vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper win
 vim.keymap.set("n", "<leader>sv", function() vim.cmd("vsplit") end, { desc = "[s]plit window [v]ertically" })
 vim.keymap.set("n", "<leader>sh", function() vim.cmd("split") end, { desc = "[s]plit window [h]orizontally" })
 
+-- Leave terminal mode and remain sane.
+vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { noremap = true })
+
 --KASPARAS TODO: make resizable splits, I use modkey which is alt for me, IDK how it is on mac
 -- TODO: Implement this.
 
