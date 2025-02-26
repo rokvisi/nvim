@@ -34,6 +34,7 @@ return {
         explorer = {
             replace_netrw = true,
         },
+        lazygit = {},
     },
     keys = {
         { "<leader>ff", function() Snacks.picker.files() end,                                   desc = "[f]ind [f]iles" },
@@ -63,7 +64,7 @@ return {
                     }
                 end)
 
-                return require("snacks").picker({
+                require("snacks").picker({
                     title = "Harpoon Marks",
                     items = picker_items,
                     focus = "list", -- can be "input" or "list",
@@ -91,7 +92,7 @@ return {
                     }
                 end)
 
-                return require("snacks").picker({
+                require("snacks").picker({
                     title = "Git Diff Files",
                     items = picker_items,
                     focus = "input", -- can be "input" or "list"
@@ -99,5 +100,7 @@ return {
             end,
             desc = "[f]ind git [d]iff files",
         },
+        { "<leader>Lg", function() Snacks.lazygit() end,     desc = "[L]azy [g]it" },
+        { "<leader>Ll", function() Snacks.lazygit.log() end, desc = "[L]azy git [l]og" },
     },
 }
