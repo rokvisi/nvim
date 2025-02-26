@@ -1,5 +1,11 @@
 -- Quickly jump between marked files.
 
+-- After a harppon jump to a non-open file - folds don't work until you enter insert mode. Possible harpoon bug.
+local function harpoon_select(nr)
+    require("harpoon"):list():select(nr)
+    vim.cmd("UfoEnableFold")
+end
+
 ---@type LazySpec
 return {
     "ThePrimeagen/harpoon",
@@ -14,10 +20,10 @@ return {
         { "<C-S-N>",     function() require("harpoon"):list():next() end,        desc = "Next harpoon mark" },
 
         -- Go to harpoon marks h, j, k, l
-        { "<C-h>",       function() require("harpoon"):list():select(1) end,     desc = "Go to harpoon mark 1" },
-        { "<C-j>",       function() require("harpoon"):list():select(2) end,     desc = "Go to harpoon mark 2" },
-        { "<C-k>",       function() require("harpoon"):list():select(3) end,     desc = "Go to harpoon mark 3" },
-        { "<C-l>",       function() require("harpoon"):list():select(4) end,     desc = "Go to harpoon mark 4" },
+        { "<C-h>",       function() harpoon_select(1) end,                       desc = "Go to harpoon mark 1" },
+        { "<C-j>",       function() harpoon_select(2) end,                       desc = "Go to harpoon mark 2" },
+        { "<C-k>",       function() harpoon_select(3) end,                       desc = "Go to harpoon mark 3" },
+        { "<C-l>",       function() harpoon_select(4) end,                       desc = "Go to harpoon mark 4" },
 
         -- Add harpoon marks h, j, k, l.
         { "<leader>hah", function() require("harpoon"):list():replace_at(1) end, desc = "[h]arpoon [a]dd mark 1" },
