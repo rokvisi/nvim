@@ -64,38 +64,44 @@ return {
                 automatic_installation = false, -- Don't automatically install servers which are set-up with lspconfig[server_name]
             })
 
+            -- Helper function to make client capabilities.
+            local function make_client_capabilities()
+                -- Get default client (neovim) capabilities.
+                local client_capabilities = vim.lsp.protocol.make_client_capabilities()
+
+                -- Extend client capabilities with folding.
+                client_capabilities.textDocument.foldingRange = {
+                    dynamicRegistration = false,
+                    lineFoldingOnly = true
+                }
+                -- Extend client capabilities with autocomplete.
+                client_capabilities = require('blink.cmp').get_lsp_capabilities(client_capabilities)
+
+                return client_capabilities
+            end
+
+            -- Helper function to merge multiple on_attach functions.
+            local function on_attach(client, bufnr)
+                require("lsp-format").on_attach(client, bufnr)
+                require("lsp-keymaps").set_lsp_keymaps(bufnr)
+            end
+
             --! If you use 'setup_handlers', make sure you don't also manually set up servers
             --! directly via `lspconfig` as this will cause servers to be set up more than once.
             require("mason-lspconfig").setup_handlers({
                 --default handler that runs for all lanugage servers that are not explicitly specified AFTER THIS FUNCTION.
                 function(server_name)
-                    -- Get default client (neovim) capabilities.
-                    local client_capabilities = vim.lsp.protocol.make_client_capabilities()
-
-                    -- Extend client capabilities with folding.
-                    client_capabilities.textDocument.foldingRange = {
-                        dynamicRegistration = false,
-                        lineFoldingOnly = true
-                    }
-
-                    -- Extend client capabilities with autocomplete.
-                    client_capabilities = require('blink.cmp').get_lsp_capabilities(client_capabilities)
-
-                    -- Setup the server.
                     require("lspconfig")[server_name].setup({
-                        capabilities = client_capabilities,
-
-                        -- Runs after attaching the language server to the buffer.
-                        on_attach = function(client, bufnr)
-                            require("lsp-format").on_attach(client, bufnr)
-                            require("lsp-keymaps").set_lsp_keymaps(bufnr)
-                        end
+                        capabilities = make_client_capabilities(),
+                        on_attach = on_attach
                     })
                 end,
 
                 -- Disble eslint 'no-unused-vars' globally.
                 ["eslint"] = function(server_name)
                     require('lspconfig')[server_name].setup({
+                        capabilities = make_client_capabilities(),
+                        on_attach = on_attach,
                         settings = {
                             rulesCustomizations = {
                                 ['@typescript-eslint/no-unused-vars'] = 'off'
@@ -112,6 +118,8 @@ return {
                 -- *IMPORTANT*: The PATH may vary depending on the OS and Package Manager.
                 ["ts_ls"] = function(server_name)
                     require("lspconfig")[server_name].setup({
+                        capabilities = make_client_capabilities(),
+                        on_attach = on_attach,
                         init_options = {
                             plugins = {
                                 {
