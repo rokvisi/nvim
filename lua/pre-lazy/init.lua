@@ -7,5 +7,12 @@ _G.bt = function()
 end
 vim.print = _G.dd
 
+-- Load neovim options.
 require("pre-lazy.opts")
+
+-- Load custom/overriden neovim keymaps.
 require("pre-lazy.keymaps")
+
+-- -- Load custom plugins/code.
+require("custom.autoroot")
+require("custom.svelte-switch")

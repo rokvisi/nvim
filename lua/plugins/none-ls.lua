@@ -16,11 +16,10 @@ return {
                 null_ls.builtins.formatting.clang_format,
             },
         })
-    end,
-    init = function()
+
         vim.api.nvim_create_autocmd({ "BufWritePre" }, {
             desc = "Autoformat on buffer write.",
-            group = vim.api.nvim_create_augroup('FormatOnSave'),
+            group = vim.api.nvim_create_augroup('FormatOnSave', {}),
             callback = function()
                 require("utils").lsp_format()
             end

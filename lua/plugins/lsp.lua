@@ -20,7 +20,7 @@
 --   })
 
 local function set_lsp_keymaps(client, bufnr)
-    dd(client.name, client.capabilities)
+    -- dd(client.name, client.capabilities)
 
     -- LSP actions
     vim.keymap.set('n', '<leader>lh', vim.lsp.buf.hover, {
