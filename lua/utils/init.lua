@@ -205,6 +205,24 @@ local function map_ipairs(src_table, map_fn)
     return vim.iter(ipairs(src_table)):map(map_fn):totable()
 end
 
+--- Format the current buffer with the language server.
+local function lsp_format()
+    vim.lsp.buf.format({
+        filter = function(ls_client)
+            -- Format only using null-ls.
+            -- TODO: If null-ls can't format or is not available, use the first available formatter.
+            return ls_client.name == "null-ls"
+
+            -- if ls_client.name == "eslint" then return false end
+            -- if ls_client.name == "tailwindcss" then return false end
+            -- if ls_client.name == "svelte" then return false end
+            -- if ls_client.name == "lua_ls" then return false end
+
+            -- return true
+        end
+    })
+end
+
 -- Return the module.
 return {
     lua = {
@@ -225,4 +243,5 @@ return {
     is_cursor_in_rect = is_cursor_in_rect,
     log_ts_nodes_under_cursor = log_ts_nodes_under_cursor,
     is_svelte_project = is_svelte_project,
+    lsp_format = lsp_format,
 }
