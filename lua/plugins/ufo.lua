@@ -1,35 +1,5 @@
 -- Better folding.
 
--- Custom text instead of '···' on folded lines.
-local fold_virt_text_handler = function(virtText, lnum, endLnum, width, truncate)
-    local newVirtText = {}
-    -- local suffix = (' 󰁂 %d ···'):format(endLnum - lnum)
-    local suffix = (' ··· (%d)'):format(endLnum - lnum)
-    local sufWidth = vim.fn.strdisplaywidth(suffix)
-    local targetWidth = width - sufWidth
-    local curWidth = 0
-    for _, chunk in ipairs(virtText) do
-        local chunkText = chunk[1]
-        local chunkWidth = vim.fn.strdisplaywidth(chunkText)
-        if targetWidth > curWidth + chunkWidth then
-            table.insert(newVirtText, chunk)
-        else
-            chunkText = truncate(chunkText, targetWidth - curWidth)
-            local hlGroup = chunk[2]
-            table.insert(newVirtText, { chunkText, hlGroup })
-            chunkWidth = vim.fn.strdisplaywidth(chunkText)
-            -- str width returned from truncate() may less than 2nd argument, need padding
-            if curWidth + chunkWidth < targetWidth then
-                suffix = suffix .. (' '):rep(targetWidth - curWidth - chunkWidth)
-            end
-            break
-        end
-        curWidth = curWidth + chunkWidth
-    end
-    table.insert(newVirtText, { suffix, 'MoreMsg' })
-    return newVirtText
-end
-
 ---@type LazySpec
 return {
     "kevinhwang91/nvim-ufo",
@@ -38,12 +8,18 @@ return {
         'nvim-treesitter/nvim-treesitter',
     },
     event = "BufReadPost",
-    -- init = function () end,
     opts = {
-        fold_virt_text_handler = fold_virt_text_handler,
+
+        fold_virt_text_handler = function(virtText, lnum, endLnum, width, truncate)
+            -- Custom text instead of '···' on folded lines
+            -- https://github.com/kevinhwang91/nvim-ufo#customize-fold-text
+            table.insert(virtText, { (' 󰇘 [%d lines]'):format(endLnum - lnum), 'MoreMsg' })
+            return virtText
+        end,
         provider_selector = function(bufnr, filetype, buftype)
             --? Using 'lsp' as the first provider takes a long while to start working.
-            return { "lsp", "indent" }
+            -- return { "lsp", "indent" }
+            return { "treesitter", "indent" }
         end,
     },
     -- 'zR' and 'zM' commands change the foldlevel ufo provide openAllFolds/closeAllFolds to open/close all folds and keep foldlevel.
