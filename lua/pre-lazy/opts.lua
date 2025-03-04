@@ -61,3 +61,10 @@ vim.o.foldenable = true     -- Enable folding.
 vim.o.foldcolumn = '1'      -- Don't show fold column in the gutter.
 vim.o.foldlevel = 99        -- Using ufo provider need a large value, feel free to decrease the value
 vim.o.foldlevelstart = 99
+
+-- n-c:block: Block cursor for normal and command-line modes
+-- i-ci:ver25: Vertical bar (25% width) for insert and command-line insert modes
+-- v-ve:ver25: Vertical bar (25% width) for visual and visual-exclusive modes
+-- r-cr:hor20: Horizontal bar (20% height) for replace modes
+-- o:hor50: Horizontal bar (50% height) for operator-pending mode
+vim.opt.guicursor = "n-c:block,i-ci:ver25,v-ve:ver25,r-cr:hor20,o:hor50"

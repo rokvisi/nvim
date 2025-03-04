@@ -163,13 +163,6 @@ local function get_last_dir_in_path(path)
     return parts[#parts - 1]
 end
 
---- Check if the current project is a svelte project.
---- @return boolean result
-local function is_svelte_project()
-    local project_root = vim.fs.root(0, { "svelte.config.js", "svelte.config.ts" })
-    return project_root ~= nil
-end
-
 --- Exclude keys from a table.
 --- @param src_table table The source table.
 --- @param keys table The keys to exclude.
@@ -223,6 +216,69 @@ local function lsp_format()
     })
 end
 
+
+--- Check if the current project is a svelte project.
+--- @return boolean result
+local function is_svelte_project()
+    local project_root = vim.fs.root(0, { "svelte.config.js", "svelte.config.ts" })
+    return project_root ~= nil
+end
+
+--- Get the language (typescript or javascript) of the current web project.
+--- @return "javascript"|"typescript"|nil result
+local function get_web_project_lang()
+    if vim.fs.root(0, { "tsconfig.json" }) ~= nil then
+        return "typescript"
+    end
+    if vim.fs.root(0, { "jsconfig.json" }) ~= nil then
+        return "javascript"
+    end
+
+    return nil -- Can't figure out priject type.
+end
+
+-- Get the possible svelte route files based on the project language.
+--- @param project_lang "javascript"|"typescript" The project language.
+--- @return string[] result The possible svelte route files.
+local function get_possible_svelte_route_files(project_lang)
+    -- Imply the default language as javascript.
+    local possible_route_files = {
+        "+page.svelte",
+        "+page.js",
+        "+page.server.js",
+        "+layout.svelte",
+        "+layout.js",
+        "+layout.server.js",
+        "+error.svelte",
+        "+server.js"
+    }
+
+    -- Transform the file extensions to typescript if the project language is typescript.
+    if project_lang == "typescript" then
+        possible_route_files = map(possible_route_files, function(route_file)
+            local transformed, _ = route_file:gsub("%.js", ".ts")
+            return transformed
+        end)
+    end
+
+    return possible_route_files
+end
+
+--- Get the files in the current buffer's directory.
+--- @return string[] result The files in the buffer's directory.
+local function get_files_in_buf_dir()
+    -- Get the path and the directory of the current buffer.
+    local filepath = vim.fn.expand("%")
+    local filedir = vim.fs.dirname(filepath)
+
+    -- Filter out non-files.
+    return vim.iter(vim.fs.dir(filedir)):filter(function(_, type)
+        return type == "file"
+    end):map(function(name, _)
+        return name
+    end):totable()
+end
+
 -- Return the module.
 return {
     lua = {
@@ -243,5 +299,8 @@ return {
     is_cursor_in_rect = is_cursor_in_rect,
     log_ts_nodes_under_cursor = log_ts_nodes_under_cursor,
     is_svelte_project = is_svelte_project,
+    get_web_project_lang = get_web_project_lang,
+    get_files_in_buf_dir = get_files_in_buf_dir,
+    get_possible_svelte_route_files = get_possible_svelte_route_files,
     lsp_format = lsp_format,
 }

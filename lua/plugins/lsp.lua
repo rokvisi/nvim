@@ -178,7 +178,7 @@ return {
                                 {
                                     name = "typescript-svelte-plugin",
                                     location = vim.fs.normalize(
-                                        "$HOME/.bun/install/global/node_modules/typescript-svelte-plugin"
+                                        "~/.bun/install/global/node_modules/typescript-svelte-plugin"
                                     ),
                                 },
                             },

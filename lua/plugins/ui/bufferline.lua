@@ -39,7 +39,7 @@ local function svelte_name_formatter(buf)
         [".*/src/(.*/)?([^+][^/]*)%.svelte$"] = "%2"
     }
 
-    local path = buf.path
+    local path = vim.fs.normalize(buf.path)
     local filename = buf.name
     local last_dir_in_path = utils.paths.get_last_dir_in_path(path)
 
@@ -76,6 +76,7 @@ return {
             -- buffers (tabs only): table(int) - the numbers of the buffers in the tab
             -- tabnr (tabs only): int          - the "handle" of the tab, can be converted to its ordinal number using: `vim.api.nvim_tabpage_get_number(buf.tabnr)`
             name_formatter = function(buf)
+                -- Any form of printing gets called a million times each second. Figure out what is happening.
                 if utils.is_svelte_project() then
                     return svelte_name_formatter(buf)
                 end

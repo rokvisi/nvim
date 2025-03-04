@@ -13,6 +13,5 @@ require("pre-lazy.opts")
 -- Load custom/overriden neovim keymaps.
 require("pre-lazy.keymaps")
 
--- -- Load custom plugins/code.
+-- Load custom plugins/code.
 require("custom.autoroot")
-require("custom.svelte-switch")

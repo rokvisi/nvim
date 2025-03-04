@@ -9,7 +9,6 @@ return {
     ---@type snacks.Config
     opts = {
         dashboard = {
-            enabled = true,
             sections = {
                 {
                     pane = 1,
@@ -40,12 +39,8 @@ return {
         },
         notifier = {},
         picker = {},
-        indent = {
-            animate = { enabled = false }
-        },
-        explorer = {
-            replace_netrw = true,
-        },
+        indent = { animate = { enabled = false } },
+        explorer = { replace_netrw = true, },
         lazygit = {},
     },
     keys = {
@@ -59,60 +54,10 @@ return {
         { "<leader>fn", function() Snacks.picker.notifications() end,                           desc = "[f]ind [n]notification" },
         { "<leader>fH", function() Snacks.picker.help() end,                                    desc = "[f]ind [H]elp" },
         { "<leader>fx", function() Snacks.picker.diagnostics_buffer() end,                      desc = "[f]ind diagnosti[x]s" },
-        {
-            "<leader>fh",
-            function()
-                local harpoon = require("harpoon")
-                local harpoon_items = harpoon:list().items
-
-                local picker_items = require("utils").table.map_ipairs(harpoon_items, function(i, item)
-                    ---@type snacks.picker.Item
-                    return {
-                        idx = i,
-                        score = i,
-                        text = item.value,
-                        file = item.value,
-                        pos = { item.context.row, item.context.col }
-                    }
-                end)
-
-                require("snacks").picker({
-                    title = "Harpoon Marks",
-                    items = picker_items,
-                    focus = "list", -- can be "input" or "list",
-                    confirm = function(picker, item)
-                        -- Use the harpoon API to select the mark.
-                        -- This forces the mark to be updated in the case of an invalid row or column.
-                        harpoon:list():select(item.idx)
-                        picker:close()
-                    end
-                })
-            end,
-            desc = "[f]ind [h]arpoon marks",
-        },
-        {
-            "<leader>fd",
-            function()
-                local files = vim.fn.systemlist('git diff --name-only')
-                local picker_items = require("utils").table.map_ipairs(files, function(i, file)
-                    ---@type snacks.picker.Item
-                    return {
-                        idx = i,
-                        score = i,
-                        text = file,
-                        file = file,
-                    }
-                end)
-
-                require("snacks").picker({
-                    title = "Git Diff Files",
-                    items = picker_items,
-                    focus = "input", -- can be "input" or "list"
-                })
-            end,
-            desc = "[f]ind git [d]iff files",
-        },
-        { "<leader>Lg", function() Snacks.lazygit() end,     desc = "[L]azy [g]it" },
-        { "<leader>Ll", function() Snacks.lazygit.log() end, desc = "[L]azy git [l]og" },
+        { "<leader>fh", require("custom.pickers").find_harpoon_marks,                           desc = "[f]ind [h]arpoon marks", },
+        { "<leader>fd", require("custom.pickers").find_git_diff_files,                          desc = "[f]ind git [d]iff files" },
+        { "<leader>fs", require("custom.pickers").find_svelte_route_files,                      desc = "[f]ind [s]velte route files" },
+        { "<leader>Lg", function() Snacks.lazygit() end,                                        desc = "[L]azy [g]it" },
+        { "<leader>Ll", function() Snacks.lazygit.log() end,                                    desc = "[L]azy git [l]og" },
     },
 }
