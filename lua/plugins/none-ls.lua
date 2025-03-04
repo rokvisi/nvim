@@ -3,17 +3,21 @@
 ---@type LazySpec
 return {
     "nvimtools/none-ls.nvim",
-    dependencies = "nvimtools/none-ls-extras.nvim",
     config = function()
-        local null_ls = require("null-ls")
+        local null_ls      = require("null-ls")
+
+        local formatting   = require("null-ls").builtins.formatting   -- Formatting sources
+        local diagnostics  = require("null-ls").builtins.diagnostics  -- Diagnostics sources
+        local code_actions = require("null-ls").builtins.code_actions -- Code actions sources
+        local completion   = require("null-ls").builtins.completion   -- Completion sources
+        local hover        = require("null-ls").builtins.hover        -- Hover sources
+
         null_ls.setup({
             sources = {
-                null_ls.builtins.formatting.stylua,
-                null_ls.builtins.code_actions.refactoring,
-                null_ls.builtins.formatting.prettierd,
-                null_ls.builtins.formatting.gofumpt,
-                null_ls.builtins.formatting.black,
-                null_ls.builtins.formatting.clang_format,
+                formatting.stylua,
+                formatting.prettierd,
+                formatting.clang_format,
+                code_actions.refactoring,
             },
         })
 

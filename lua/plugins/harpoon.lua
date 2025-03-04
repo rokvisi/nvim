@@ -14,8 +14,6 @@ return {
     opts = {},
     keys = {
         -- Generic add, remove, next, previous.
-        { "<leader>hA",  function() require("harpoon"):list():add() end,         desc = "[h]arpoon [A]dd" },
-        { "<leader>hD",  function() require("harpoon"):list():remove() end,      desc = "[h]arpoon [D]elete" },
         { "<C-S-P>",     function() require("harpoon"):list():prev() end,        desc = "Previous harpoon mark" },
         { "<C-S-N>",     function() require("harpoon"):list():next() end,        desc = "Next harpoon mark" },
 

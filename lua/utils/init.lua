@@ -279,6 +279,25 @@ local function get_files_in_buf_dir()
     end):totable()
 end
 
+--- Prompt the user with a question and a list of answers.
+--- @param question string The question to ask.
+--- @param answers string[] The answers to choose from. Answers can contain a '&' character to denote a shortcut key.
+--- @return string|nil choice The Lowercase answer chosen by the user.
+local function confirm(question, answers)
+    local answer = vim.iter(answers):join('\n')
+    local choice = vim.fn.confirm(question, answer, "Question")
+
+    -- If the user cancels the prompt.
+    if choice == 0 then
+        return nil
+    end
+
+    -- Transform the choice to remove the '&' character (denotes shortcut key).
+    local transformed_choice, _ = answers[choice]:gsub("%&", "")
+
+    return transformed_choice:lower()
+end
+
 -- Return the module.
 return {
     lua = {
@@ -296,6 +315,7 @@ return {
     },
     log = log,
     f_log = f_log,
+    confirm = confirm,
     is_cursor_in_rect = is_cursor_in_rect,
     log_ts_nodes_under_cursor = log_ts_nodes_under_cursor,
     is_svelte_project = is_svelte_project,

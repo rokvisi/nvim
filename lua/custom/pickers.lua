@@ -1,8 +1,10 @@
+local utils = require("utils")
+
 local function find_harpoon_marks()
     local harpoon = require("harpoon")
     local harpoon_items = harpoon:list().items
 
-    local picker_items = require("utils").table.map_ipairs(harpoon_items, function(i, item)
+    local picker_items = utils.table.map_ipairs(harpoon_items, function(i, item)
         ---@type snacks.picker.Item
         return {
             idx = i,
@@ -28,7 +30,7 @@ end
 
 local function find_git_diff_files()
     local files = vim.fn.systemlist('git diff --name-only')
-    local picker_items = require("utils").table.map_ipairs(files, function(i, file)
+    local picker_items = utils.table.map_ipairs(files, function(i, file)
         ---@type snacks.picker.Item
         return {
             idx = i,
@@ -47,8 +49,6 @@ local function find_git_diff_files()
 end
 
 local function find_svelte_route_files()
-    local utils = require("utils")
-
     -- Abort if the current buffer is not a part of a svelte project.
     if not utils.is_svelte_project() then return end
 
@@ -88,13 +88,13 @@ local function find_svelte_route_files()
         sort = { fields = { "score:desc", "idx" } }, -- Only sort by score and then by index to preserve order.
         focus = "list",                              -- Focus on the list and not the input.
         confirm = function(picker, item)
+            -- If the file doesn't exist, ask the user if they want to create it.
             if item.exists == false then
-                local question = '"' .. item.file .. "\" doesn't exist.\nCreate it?"
-                local choice = vim.fn.confirm(question, "&Yes\n&No", "Question")
-
-                if choice ~= 1 then return end
+                local answer = utils.confirm('"' .. item.file .. "\" doesn't exist.\nCreate it?", { "Yes", "No" })
+                if answer ~= "yes" then return end
             end
 
+            -- Open the file in a new buffer.
             Snacks.picker.actions.jump(picker, _, { cmd = "buffer" })
         end,
         layout = {
