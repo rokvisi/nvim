@@ -3,11 +3,6 @@
 ---@type LazySpec
 return {
     {
-        "rebelot/kanagawa.nvim",
-        lazy = false,
-        opts = {},
-    },
-    {
         "folke/tokyonight.nvim",
         lazy = false,
         priority = 1000,
