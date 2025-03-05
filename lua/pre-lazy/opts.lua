@@ -13,11 +13,11 @@ vim.o.shellxquote = ''
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- KASPARAS: We want to enable text wraps, because we have a cool and sneaky remap for j and k to comfortably move around wraps
+-- Enable text wraps (we have a remap for j/k to comfortably move around wraps)
 vim.o.wrap = true
 vim.o.breakindent = true
 
--- KASPRAS: better wrapping option
+-- KASPRAS: better wrapping options
 vim.cmd("set whichwrap+=<,>,[,],h,l")
 
 -- Set line numbers (current line abosulte, others relative)
@@ -49,15 +49,13 @@ vim.o.showmode = false -- disable text
 vim.o.laststatus = 3   -- disable the line
 
 -- Set fill characters for various elements.
--- vim.opt.fillchars:append({ eob = ' ', fold = ' ', foldopen = '', foldsep = ' ', foldclose = '' })
 vim.opt.fillchars = { eob = ' ', fold = ' ', foldopen = '', foldsep = ' ', foldclose = '' }
 
-vim.o.hlsearch = true
-vim.o.incsearch = true
+vim.o.hlsearch = false -- disable search match highlights after exiting search mode.
 
 -- folds
 vim.o.foldmethod = "manual" -- needed for ufo
 vim.o.foldenable = true     -- Enable folding.
 vim.o.foldcolumn = '1'      -- Don't show fold column in the gutter.
 vim.o.foldlevel = 99        -- Using ufo provider need a large value, feel free to decrease the value
-vim.o.foldlevelstart = 99
+vim.o.foldlevelstart = 2
