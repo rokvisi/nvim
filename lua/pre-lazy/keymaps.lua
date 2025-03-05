@@ -6,10 +6,6 @@ vim.keymap.set("v", "<S-y>", '"+y', { desc = "Yank to system clipboard" })
 vim.keymap.set("n", "j", "gj", { noremap = true, silent = true })
 vim.keymap.set("n", "k", "gk", { noremap = true, silent = true })
 
--- Move selected lines while holding alt.
-vim.keymap.set("v", "<M-k>", ":m '<-2<CR>gv=gv")
-vim.keymap.set("v", "<M-j>", ":m '>+1<CR>gv=gv")
-
 -- No need to release CTRL when switching window focus.
 vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
 vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
@@ -19,9 +15,6 @@ vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper win
 -- Easier window splits.
 vim.keymap.set("n", "<leader>sv", function() vim.cmd("vsplit") end, { desc = "[s]plit window [v]ertically" })
 vim.keymap.set("n", "<leader>sh", function() vim.cmd("split") end, { desc = "[s]plit window [h]orizontally" })
-
--- Leave terminal mode and remain sane.
--- vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { noremap = true })
 
 --KASPARAS TODO: make resizable splits, I use modkey which is alt for me, IDK how it is on mac
 -- TODO: Implement this.
@@ -67,3 +60,8 @@ vim.keymap.set({ "n", "v" }, "<RightMouse>", function()
         }
     }, { mouse = true })
 end, {})
+
+-- Delete buffers without disrupting window layout.
+vim.keymap.set("n", "<leader>bd", function()
+    Snacks.bufdelete()
+end)

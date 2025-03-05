@@ -1,8 +1,9 @@
--- Autopairs html tags.
+-- Use treesitter to autoclose and autorename html tags
 
 ---@type LazySpec
 return {
     'windwp/nvim-ts-autotag',
+    lazy = false, -- lazy loading is not particularly necessary for this plugin
     opts = {
 
         -- This nested 'opts' is not a mistake. The plugin expects it.
