@@ -58,4 +58,4 @@ vim.o.foldmethod = "manual" -- needed for ufo
 vim.o.foldenable = true     -- Enable folding.
 vim.o.foldcolumn = '1'      -- Don't show fold column in the gutter.
 vim.o.foldlevel = 99        -- Using ufo provider need a large value, feel free to decrease the value
-vim.o.foldlevelstart = 2
+vim.o.foldlevelstart = 99

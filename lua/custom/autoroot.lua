@@ -1,6 +1,9 @@
 -- Taken from 'https://www.reddit.com/r/neovim/comments/zy5s0l/you_dont_need_vimrooter_usually_or_how_to_set_up/'
 
 local function set_root()
+    -- Only run if the buffer type a simple file (byftype == "")
+    if vim.bo.buftype ~= '' then return end
+
     -- Get the path of the current buffer.
     local buffer_path = vim.api.nvim_buf_get_name(0)
     if buffer_path == '' then return end
@@ -21,5 +24,7 @@ local function set_root()
     vim.fn.chdir(root_dir)
 end
 
-local root_augroup = vim.api.nvim_create_augroup('AutoRoot', {})
-vim.api.nvim_create_autocmd('BufEnter', { group = root_augroup, callback = set_root })
+vim.api.nvim_create_autocmd('BufEnter', {
+    group = vim.api.nvim_create_augroup('AutoRoot', {}),
+    callback = set_root
+})

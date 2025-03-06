@@ -15,7 +15,12 @@ return {
         null_ls.setup({
             sources = {
                 formatting.stylua,
-                formatting.prettierd,
+                formatting.prettierd.with({
+                    -- For js/ts files without a .prettierrc.json file, use the default config.
+                    env = {
+                        PRETTIERD_DEFAULT_CONFIG = vim.fs.normalize(vim.fn.stdpath("config") .. "/.prettierrc.json"),
+                    },
+                }),
                 formatting.clang_format,
                 code_actions.refactoring,
             },
